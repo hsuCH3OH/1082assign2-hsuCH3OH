@@ -16,10 +16,9 @@ final int BUTTON_RIGHT  = 392;
 int speedX,soldierXAxis,soldierYAxis;
 int groundhogIdleX, groundhogIdleY, groundhogMovingSpeed;
 int cabbageX, cabbageY, lifeImage1X, lifeImage2X, lifeImage3X, outOfCanvas;
-int reSpeedX, reSoldierXAxis, reSoldierYAxis, reCabbageX, reCabbageY;
 
 void setup() {
-	size(640, 480, P2D);
+  size(640, 480, P2D);
   backgroundImg     = loadImage("img/bg.jpg");
   groundhogIdleImg  = loadImage("img/groundhogIdle.png"); 
   groundhogDownImg  = loadImage("img/groundhogDown.png");
@@ -46,17 +45,10 @@ void setup() {
   speedX       = floor(random(4,8));
   soldierXAxis = floor(random(640));
   soldierYAxis = floor(random(2,6))*80;
-  
-  reSpeedX       = floor(random(4,8));
-  reSoldierXAxis = floor(random(640));
-  reSoldierYAxis = floor(random(2,6))*80;
-  
+ 
   //cabbage location
   cabbageX = floor(random(0,8))*80;
   cabbageY = floor(random(2,6))*80;
-  
-  reCabbageX = floor(random(0,8))*80;
-  reCabbageY = floor(random(2,6))*80;
   
   lifeImage1X = 10;
   lifeImage2X = 80;
@@ -75,10 +67,10 @@ void draw() {
           if (mousePressed){             //also the botton have to be pressed
             gameState = GAME_RUN;
           }
-      }else{
-        image (titleImg,0,0);
-        image (startNormal,248,360);
-      }
+       }else{
+         image (titleImg,0,0);
+         image (startNormal,248,360);
+        }
     break;
 
     case GAME_RUN:
@@ -92,7 +84,7 @@ void draw() {
       image(soilImg,0,160);
       noStroke();
       fill(124, 204, 25);
-      rect(0,145,640,15);
+      rect(0,145,width,15);
       image(cabbageImg,cabbageX, cabbageY);
       
       //3 lives
@@ -111,9 +103,9 @@ void draw() {
       image (soldierImg,soldierXAxis,soldierYAxis);
       
       //AABB hit A=soldier,B=hog
-      if( soldierXAxis < groundhogIdleX+80 && 
-          soldierXAxis+80 > groundhogIdleX &&
-          soldierYAxis < groundhogIdleY+80 &&
+      if( soldierXAxis    < groundhogIdleX+80 && 
+          soldierXAxis+80 > groundhogIdleX    &&
+          soldierYAxis    < groundhogIdleY+80 &&
           soldierYAxis+80 > groundhogIdleY){
             groundhogIdleX = width/2;
             groundhogIdleY = 80;      // hog back to ground
@@ -129,9 +121,9 @@ void draw() {
       }
       
       //AABB hit A=cabbage,B=hog
-      if( cabbageX < groundhogIdleX+80 &&
-          cabbageX+80 > groundhogIdleX &&
-          cabbageY < groundhogIdleY+80 &&
+      if( cabbageX    < groundhogIdleX+80 &&
+          cabbageX+80 > groundhogIdleX    &&
+          cabbageY    < groundhogIdleY+80 &&
           cabbageY+80 > groundhogIdleY){
             cabbageX = outOfCanvas;
             cabbageY = outOfCanvas;
@@ -154,41 +146,43 @@ void draw() {
       image (restartNormal,248,360);
       if (mouseX > BUTTON_LEFT && mouseX < BUTTON_RIGHT &&
           mouseY > BUTTON_TOP  && mouseY < BUTTON_BOTTOM){
-          image (restartHovered,248,360);
-          if (mousePressed){
-          gameState   = GAME_RUN;
-          groundhogIdleX = width/2;
-          groundhogIdleY = 80;
-          lifeImage1X    = 10;
-          lifeImage2X    = 80;
-          soldierXAxis   = reSoldierXAxis;
-          soldierYAxis   = reSoldierYAxis;
-          cabbageX       = reCabbageX;
-          cabbageY       = reCabbageY;
-          //image (groundhogIdleImg, groundhogIdleX, groundhogIdleY);
-          //image (soldierImg, reSoldierXAxis, reSoldierYAxis);
-          //image(cabbageImg, reCabbageX, reCabbageY);
-          }
+            image (restartHovered,248,360);
+            if (mousePressed){
+              gameState      = GAME_RUN;
+              groundhogIdleX = width/2;
+              groundhogIdleY = 80;
+              lifeImage1X    = 10;
+              lifeImage2X    = 80;
+              soldierXAxis   = floor(random(640));
+              soldierYAxis   = floor(random(2,6))*80;
+              cabbageX       = floor(random(0,8))*80;
+              cabbageY       = floor(random(2,6))*80;
+            }
       }
     break;
   } //for switch
 }   //for draw
 
 void keyPressed(){
+  
   if (gameState == GAME_RUN){
     if (key == CODED){
       if (keyPressed){
         switch(keyCode){
         case LEFT:
-        groundhogIdleX -=groundhogMovingSpeed;
+        groundhogIdleX -= groundhogMovingSpeed;
+        image(groundhogLeftImg,groundhogIdleX,groundhogIdleY);
+        
         break;
         
         case RIGHT:
-        groundhogIdleX +=groundhogMovingSpeed;
+        groundhogIdleX += groundhogMovingSpeed;
+        image(groundhogRightImg,groundhogIdleX,groundhogIdleY);
         break;
         
         case DOWN:
-        groundhogIdleY +=groundhogMovingSpeed;
+        groundhogIdleY += groundhogMovingSpeed;
+        image(groundhogDownImg,groundhogIdleX, groundhogIdleY);
         break;
         }
       }
@@ -200,5 +194,5 @@ void keyPressed(){
   }
 }
 ////////
-void keyReleased(){
+void keyReleased(){  
 }
