@@ -5,7 +5,6 @@ PImage gameOverImg, titleImg, startNormal, restartNormal, startHovered, restartH
 final int GAME_START = 0;
 final int GAME_RUN   = 1;
 final int GAME_OVER  = 2;
-//final int GAME_WIN = 3;
 int gameState = GAME_START;
 
 final int BUTTON_TOP    = 360;
@@ -21,7 +20,7 @@ int lastTime=0;
 
 void setup() {
 
-  size(640, 480, P2D);
+	size(640, 480, P2D);
   backgroundImg     = loadImage("img/bg.jpg");
   groundhogIdleImg  = loadImage("img/groundhogIdle.png"); 
   groundhogDownImg  = loadImage("img/groundhogDown.png");
@@ -40,6 +39,8 @@ void setup() {
   startHovered   = loadImage("img/startHovered.png");
   restartHovered = loadImage("img/restartHovered.png");
   
+  mainX = width/2;
+  mainY = 80;
   groundhogIdleX = width/2;
   groundhogIdleY = 80;
   groundhogMovingSpeed  = 80;
@@ -58,6 +59,7 @@ void setup() {
   lifeImage2X = 80;
   lifeImage3X = -80;
   outOfCanvas = -80;
+
 }
 
 void draw() {
@@ -165,6 +167,61 @@ void draw() {
       }
     break;
   } //for switch
+    
+  //// delta time  
+  //oldTime = nowTime;
+  //nowTime = millis();
+  
+  //if(gameState == GAME_RUN){
+  //  if (keyPressed){
+  //    if (key == CODED){
+  //      switch (keyCode){
+  //      case LEFT:
+        
+  //      if(nowTime - oldTime >=250){
+  //        groundhogIdleX -= groundhogMovingSpeed;
+
+  //        nowTime = millis();
+  //      }
+  //      else{          
+  //        groundhogIdleX -=groundhogMovingSpeed/4;
+  //        }
+  //        //if (groundhogIdleX <0)  {groundhogIdleX =0;}
+  //        //else if (groundhogIdleX >=  0 && groundhogIdleX <= 79)   {groundhogIdleX =0;}
+  //        //else if (groundhogIdleX >= 80 && groundhogIdleX <=159)   {groundhogIdleX =80;}
+  //        //else if (groundhogIdleX >=160 && groundhogIdleX <=239)   {groundhogIdleX =160;}
+  //        //else if (groundhogIdleX >=240 && groundhogIdleX <=319)   {groundhogIdleX =240;}
+  //        //else if (groundhogIdleX >=320 && groundhogIdleX <=399)   {groundhogIdleX =320;}
+  //        //else if (groundhogIdleX >=400 && groundhogIdleX <=479)   {groundhogIdleX =400;}
+  //        //else if (groundhogIdleX >=480 && groundhogIdleX <=559)   {groundhogIdleX =480;}
+  //        //else if (groundhogIdleX >=560 && groundhogIdleX <=width) {groundhogIdleX =560;}
+          
+  //      image(groundhogLeftImg,groundhogIdleX,groundhogIdleY);
+  //      break;
+        
+  //      case RIGHT:
+  //      if(nowTime - oldTime >=250){
+  //        groundhogIdleX += groundhogMovingSpeed;
+  //        nowTime = millis();
+  //      }else{
+  //        groundhogIdleX +=groundhogMovingSpeed/4;
+  //        }
+  //      image(groundhogRightImg,groundhogIdleX,groundhogIdleY);
+  //      break;
+        
+  //      case DOWN:
+  //      if(nowTime - oldTime >=250){
+  //        groundhogIdleY += groundhogMovingSpeed;
+  //        nowTime = millis();
+  //      }else{
+  //        groundhogIdleY +=groundhogMovingSpeed/4;
+  //        }
+  //      image(groundhogDownImg,groundhogIdleX,groundhogIdleY);
+  //      break;
+  //      } //for switch keyCode
+  //    }
+  //  }
+  //}
   
   // edge limit for hog
   if (groundhogIdleX > width-80)  {groundhogIdleX = width-80;}
@@ -175,7 +232,7 @@ void draw() {
 
 void keyPressed(){
   oldTime = nowTime;
-  nowTime = millis(); //delta time
+  nowTime = millis();
   
   if (gameState == GAME_RUN){
     if (key == CODED){
@@ -214,4 +271,7 @@ void keyPressed(){
       }
     }
   }
+}
+
+void keyReleased(){
 }
