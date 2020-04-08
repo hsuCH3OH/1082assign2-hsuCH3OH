@@ -168,58 +168,6 @@ void draw() {
       }
     break;
   } //for switch
-    
-  oldTime = nowTime;
-  nowTime = millis();
-  
-  if(gameState == GAME_RUN){
-    if (keyPressed){
-      if (key == CODED){
-        switch (keyCode){
-        case LEFT: 
-        if(nowTime - oldTime >=250){
-          groundhogIdleX -= groundhogMovingSpeed;
-          nowTime = millis();
-        }
-        else{
-          groundhogIdleX -=groundhogMovingSpeed/4;
-          }
-          //if (groundhogIdleX <0)  {groundhogIdleX =0;}
-          //else if (groundhogIdleX >=  0 && groundhogIdleX <= 79)   {groundhogIdleX =0;}
-          //else if (groundhogIdleX >= 80 && groundhogIdleX <=159)   {groundhogIdleX =80;}
-          //else if (groundhogIdleX >=160 && groundhogIdleX <=239)   {groundhogIdleX =160;}
-          //else if (groundhogIdleX >=240 && groundhogIdleX <=319)   {groundhogIdleX =240;}
-          //else if (groundhogIdleX >=320 && groundhogIdleX <=399)   {groundhogIdleX =320;}
-          //else if (groundhogIdleX >=400 && groundhogIdleX <=479)   {groundhogIdleX =400;}
-          //else if (groundhogIdleX >=480 && groundhogIdleX <=559)   {groundhogIdleX =480;}
-          //else if (groundhogIdleX >=560 && groundhogIdleX <=width) {groundhogIdleX =560;}
-          
-        image(groundhogLeftImg,groundhogIdleX,groundhogIdleY);
-        break;
-        
-        case RIGHT:
-        if(nowTime - oldTime >=250){
-          groundhogIdleX += groundhogMovingSpeed;
-          nowTime = millis();
-        }else{
-          groundhogIdleX +=20;
-          }
-        image(groundhogRightImg,groundhogIdleX,groundhogIdleY);
-        break;
-        
-        case DOWN:
-        if(nowTime - oldTime >=250){
-          groundhogIdleY += groundhogMovingSpeed;
-          nowTime = millis();
-        }else{
-          groundhogIdleY +=20;
-          }
-        image(groundhogDownImg,groundhogIdleX,groundhogIdleY);
-        break;
-        } //for switch keyCode
-      }
-    }
-  }
   
   // edge limit for hog
   if (groundhogIdleX > width-80)  {groundhogIdleX = width-80;}
@@ -229,38 +177,44 @@ void draw() {
 }   //for draw
 
 void keyPressed(){
-  //oldTime = nowTime;
-  //nowTime = millis();
+  oldTime = nowTime;
+  nowTime = millis();
   
-  //if (gameState == GAME_RUN){
-  //  if (key == CODED){
-  //    if (keyPressed){
-  //      switch(keyCode){
-  //      case LEFT:       
-  //      if(nowTime-oldTime >= 250){
-  //        groundhogIdleX = groundhogIdleX - groundhogMovingSpeed;
-  //        nowTime = millis();          
-  //      }else{          
-  //        groundhogIdleX -= groundhogMovingSpeed;
-  //        image(groundhogLeftImg,groundhogIdleX,groundhogIdleY);
-  //      }
-  //      break;
+  if (gameState == GAME_RUN){
+    if (key == CODED){
+      if (keyPressed){
+        switch(keyCode){
+        case LEFT:       
+        if(nowTime-oldTime >= 250){
+          groundhogIdleX = groundhogIdleX - groundhogMovingSpeed;
+          nowTime = millis();          
+        }else{
+          groundhogIdleX -= groundhogMovingSpeed;          
+        }
+        image(groundhogLeftImg,groundhogIdleX,groundhogIdleY);
+        break;
                
-  //      case RIGHT:
-  //      groundhogIdleX += groundhogMovingSpeed;
-  //      image(groundhogRightImg,groundhogIdleX,groundhogIdleY);
-  //      break;
+        case RIGHT:
+        if(nowTime-oldTime >= 250){
+          groundhogIdleX = groundhogIdleX + groundhogMovingSpeed;
+          nowTime = millis();          
+        }else{
+          groundhogIdleX += groundhogMovingSpeed;
+        }
+        image(groundhogRightImg,groundhogIdleX,groundhogIdleY);
+        break;
         
-  //      case DOWN:
-  //      groundhogIdleY += groundhogMovingSpeed;
-  //      image(groundhogDownImg,groundhogIdleX, groundhogIdleY);
-  //      break;
-  //      }
-  //    }
-  //  }
-  //} 
-}
-////////
-void keyReleased(){
-
+        case DOWN:
+        if(nowTime-oldTime >= 250){
+          groundhogIdleY = groundhogIdleY + groundhogMovingSpeed;
+          nowTime = millis();          
+        }else{
+          groundhogIdleY += groundhogMovingSpeed;
+        }
+        image(groundhogDownImg,groundhogIdleX, groundhogIdleY);
+        break;
+        }
+      }
+    }
+  }
 }
