@@ -13,12 +13,15 @@ final int BUTTON_BOTTOM = 420;
 final int BUTTON_LEFT   = 248;
 final int BUTTON_RIGHT  = 392;
 
-int speedX,soldierXAxis,soldierYAxis;
-int groundhogIdleX, groundhogIdleY, groundhogMovingSpeed;
+int speedX,soldierXAxis,soldierYAxis, oldTime, nowTime;
+int groundhogIdleX, groundhogIdleY, groundhogMovingSpeed, groundhogMovingSpeed2;
 int cabbageX, cabbageY, lifeImage1X, lifeImage2X, lifeImage3X, outOfCanvas;
+int mainX, mainY;
+int lastTime=0;
 
 void setup() {
-  size(640, 480, P2D);
+
+	size(640, 480, P2D);
   backgroundImg     = loadImage("img/bg.jpg");
   groundhogIdleImg  = loadImage("img/groundhogIdle.png"); 
   groundhogDownImg  = loadImage("img/groundhogDown.png");
@@ -37,13 +40,16 @@ void setup() {
   startHovered   = loadImage("img/startHovered.png");
   restartHovered = loadImage("img/restartHovered.png");
   
+  mainX = width/2;
+  mainY = 80;
   groundhogIdleX = width/2;
   groundhogIdleY = 80;
-  groundhogMovingSpeed = 80;
-  
+  groundhogMovingSpeed  = 80;
+  groundhogMovingSpeed2 = 20;
+    
   //soldier moving speed
-  speedX       = floor(random(4,8));
-  soldierXAxis = floor(random(640));
+  speedX       = 6;
+  soldierXAxis = -100;
   soldierYAxis = floor(random(2,6))*80;
  
   //cabbage location
@@ -53,7 +59,8 @@ void setup() {
   lifeImage1X = 10;
   lifeImage2X = 80;
   lifeImage3X = -80;
-  outOfCanvas = -80; 
+  outOfCanvas = -80;
+
 }
 
 void draw() {
@@ -64,7 +71,7 @@ void draw() {
       if (mouseX > BUTTON_LEFT && mouseX < BUTTON_RIGHT &&
           mouseY > BUTTON_TOP  && mouseY < BUTTON_BOTTOM){
           image (startHovered,248,360);  //startBotton turn light
-          if (mousePressed){             //also the botton have to be pressed
+          if (mousePressed){             //also the botton has to be pressed
             gameState = GAME_RUN;
           }
        }else{
@@ -102,7 +109,7 @@ void draw() {
       image (groundhogIdleImg,groundhogIdleX,groundhogIdleY);
       image (soldierImg,soldierXAxis,soldierYAxis);
       
-      //AABB hit A=soldier,B=hog
+      //AABB hit, A=soldier,B=hog
       if( soldierXAxis    < groundhogIdleX+80 && 
           soldierXAxis+80 > groundhogIdleX    &&
           soldierYAxis    < groundhogIdleY+80 &&
@@ -120,7 +127,7 @@ void draw() {
             }
       }
       
-      //AABB hit A=cabbage,B=hog
+      //AABB hit, A=cabbage,B=hog
       if( cabbageX    < groundhogIdleX+80 &&
           cabbageX+80 > groundhogIdleX    &&
           cabbageY    < groundhogIdleY+80 &&
@@ -161,38 +168,102 @@ void draw() {
       }
     break;
   } //for switch
-}   //for draw
-
-void keyPressed(){
+    
+  oldTime = nowTime;
+  nowTime = millis();
   
-  if (gameState == GAME_RUN){
-    if (key == CODED){
-      if (keyPressed){
-        switch(keyCode){
+  if(gameState == GAME_RUN){
+    if (keyPressed){
+      if (key == CODED){
+        switch (keyCode){
         case LEFT:
-        groundhogIdleX -= groundhogMovingSpeed;
-        image(groundhogLeftImg,groundhogIdleX,groundhogIdleY);
         
+        println(nowTime- oldTime);
+        if(nowTime - oldTime >=250){
+          groundhogIdleX -= groundhogMovingSpeed;
+
+          nowTime = millis();
+        }
+        else{
+          groundhogIdleX -=groundhogMovingSpeed/4;
+          }
+          //if (groundhogIdleX <0)  {groundhogIdleX =0;}
+          //else if (groundhogIdleX >=  0 && groundhogIdleX <= 79)   {groundhogIdleX =0;}
+          //else if (groundhogIdleX >= 80 && groundhogIdleX <=159)   {groundhogIdleX =80;}
+          //else if (groundhogIdleX >=160 && groundhogIdleX <=239)   {groundhogIdleX =160;}
+          //else if (groundhogIdleX >=240 && groundhogIdleX <=319)   {groundhogIdleX =240;}
+          //else if (groundhogIdleX >=320 && groundhogIdleX <=399)   {groundhogIdleX =320;}
+          //else if (groundhogIdleX >=400 && groundhogIdleX <=479)   {groundhogIdleX =400;}
+          //else if (groundhogIdleX >=480 && groundhogIdleX <=559)   {groundhogIdleX =480;}
+          //else if (groundhogIdleX >=560 && groundhogIdleX <=width) {groundhogIdleX =560;}
+          
+        image(groundhogLeftImg,groundhogIdleX,groundhogIdleY);
         break;
         
         case RIGHT:
-        groundhogIdleX += groundhogMovingSpeed;
+        if(nowTime - oldTime >=250){
+          groundhogIdleX += groundhogMovingSpeed;
+          nowTime = millis();
+        }else{
+          groundhogIdleX +=20;
+          }
         image(groundhogRightImg,groundhogIdleX,groundhogIdleY);
         break;
         
         case DOWN:
-        groundhogIdleY += groundhogMovingSpeed;
-        image(groundhogDownImg,groundhogIdleX, groundhogIdleY);
+        if(nowTime - oldTime >=250){
+          groundhogIdleY += groundhogMovingSpeed;
+          nowTime = millis();
+        }else{
+          groundhogIdleY +=20;
+          }
+        image(groundhogDownImg,groundhogIdleX,groundhogIdleY);
         break;
-        }
+        } //for switch keyCode
       }
     }
-    // edge limit for hog
-    if (groundhogIdleX > width-80)  {groundhogIdleX = width-80;}
-    if (groundhogIdleX < 0)         {groundhogIdleX = 0;}
-    if (groundhogIdleY > height-80) {groundhogIdleY = height-80;}
   }
+  
+  // edge limit for hog
+  if (groundhogIdleX > width-80)  {groundhogIdleX = width-80;}
+  if (groundhogIdleX < 0)         {groundhogIdleX = 0;}
+  if (groundhogIdleY > height-80) {groundhogIdleY = height-80;}
+  
+}   //for draw
+
+void keyPressed(){
+  //oldTime = nowTime;
+  //nowTime = millis();
+  
+  //if (gameState == GAME_RUN){
+  //  if (key == CODED){
+  //    if (keyPressed){
+  //      switch(keyCode){
+  //      case LEFT:       
+  //      if(nowTime-oldTime >= 250){
+  //        groundhogIdleX = groundhogIdleX - groundhogMovingSpeed;
+  //        nowTime = millis();          
+  //      }else{          
+  //        groundhogIdleX -= groundhogMovingSpeed;
+  //        image(groundhogLeftImg,groundhogIdleX,groundhogIdleY);
+  //      }
+  //      break;
+               
+  //      case RIGHT:
+  //      groundhogIdleX += groundhogMovingSpeed;
+  //      image(groundhogRightImg,groundhogIdleX,groundhogIdleY);
+  //      break;
+        
+  //      case DOWN:
+  //      groundhogIdleY += groundhogMovingSpeed;
+  //      image(groundhogDownImg,groundhogIdleX, groundhogIdleY);
+  //      break;
+  //      }
+  //    }
+  //  }
+  //} 
 }
 ////////
-void keyReleased(){  
+void keyReleased(){
+
 }
