@@ -176,12 +176,9 @@ void draw() {
     if (keyPressed){
       if (key == CODED){
         switch (keyCode){
-        case LEFT:
-        
-        println(nowTime- oldTime);
+        case LEFT: 
         if(nowTime - oldTime >=250){
           groundhogIdleX -= groundhogMovingSpeed;
-
           nowTime = millis();
         }
         else{
