@@ -21,7 +21,7 @@ int lastTime=0;
 
 void setup() {
 
-	size(640, 480, P2D);
+  size(640, 480, P2D);
   backgroundImg     = loadImage("img/bg.jpg");
   groundhogIdleImg  = loadImage("img/groundhogIdle.png"); 
   groundhogDownImg  = loadImage("img/groundhogDown.png");
@@ -40,8 +40,6 @@ void setup() {
   startHovered   = loadImage("img/startHovered.png");
   restartHovered = loadImage("img/restartHovered.png");
   
-  mainX = width/2;
-  mainY = 80;
   groundhogIdleX = width/2;
   groundhogIdleY = 80;
   groundhogMovingSpeed  = 80;
@@ -60,7 +58,6 @@ void setup() {
   lifeImage2X = 80;
   lifeImage3X = -80;
   outOfCanvas = -80;
-
 }
 
 void draw() {
@@ -178,7 +175,7 @@ void draw() {
 
 void keyPressed(){
   oldTime = nowTime;
-  nowTime = millis();
+  nowTime = millis(); //delta time
   
   if (gameState == GAME_RUN){
     if (key == CODED){
