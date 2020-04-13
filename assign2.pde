@@ -11,16 +11,23 @@ final int BUTTON_TOP    = 360;
 final int BUTTON_BOTTOM = 420;
 final int BUTTON_LEFT   = 248;
 final int BUTTON_RIGHT  = 392;
+final int GRID = 80;
+
+boolean leftPressed  = false;
+boolean rightPressed = false;
+boolean downPressed  = false;
+boolean noPressed    = true;
+
 
 int speedX,soldierXAxis,soldierYAxis, oldTime, nowTime;
 int groundhogIdleX, groundhogIdleY, groundhogMovingSpeed, groundhogMovingSpeed2;
 int cabbageX, cabbageY, lifeImage1X, lifeImage2X, lifeImage3X, outOfCanvas;
-int mainX, mainY;
+int mainX, mainY, hogFrame;
 int lastTime=0;
 
 void setup() {
 
-	size(640, 480, P2D);
+  size(640, 480, P2D);
   backgroundImg     = loadImage("img/bg.jpg");
   groundhogIdleImg  = loadImage("img/groundhogIdle.png"); 
   groundhogDownImg  = loadImage("img/groundhogDown.png");
@@ -38,9 +45,7 @@ void setup() {
   restartNormal  = loadImage("img/restartNormal.png");
   startHovered   = loadImage("img/startHovered.png");
   restartHovered = loadImage("img/restartHovered.png");
-  
-  mainX = width/2;
-  mainY = 80;
+
   groundhogIdleX = width/2;
   groundhogIdleY = 80;
   groundhogMovingSpeed  = 80;
@@ -59,6 +64,9 @@ void setup() {
   lifeImage2X = 80;
   lifeImage3X = -80;
   outOfCanvas = -80;
+  
+  frameRate(60);
+  lastTime = millis();
 
 }
 
@@ -104,8 +112,7 @@ void draw() {
       strokeWeight(5);
       ellipse(590,50,120,120);
       
-      //characters
-      image (groundhogIdleImg,groundhogIdleX,groundhogIdleY);
+      //soldier
       image (soldierImg,soldierXAxis,soldierYAxis);
       
       //AABB hit, A=soldier,B=hog
@@ -124,6 +131,9 @@ void draw() {
             else if (lifeImage1X ==10 && lifeImage2X == outOfCanvas){
               lifeImage1X = outOfCanvas;
             }
+          downPressed = false;
+          leftPressed = false;
+          rightPressed = false;
       }
       
       //AABB hit, A=cabbage,B=hog
@@ -145,6 +155,43 @@ void draw() {
       if(lifeImage1X == outOfCanvas){
         gameState = GAME_OVER;
       }
+      
+      if (downPressed == false && leftPressed == false && rightPressed == false) {
+        image(groundhogIdleImg, groundhogIdleX, groundhogIdleY);
+      }
+  
+      if(downPressed){
+        hogFrame++;
+        if(hogFrame > 0 && hogFrame < 15){
+          groundhogIdleY += GRID/15.0;
+          image(groundhogDownImg, groundhogIdleX,groundhogIdleY);
+        }else{
+          groundhogIdleY = mainY+=GRID;
+          downPressed = false;
+        }
+      }
+      
+      if(leftPressed){
+        hogFrame++;
+        if(hogFrame >0 && hogFrame <15){
+          groundhogIdleX -= GRID/15.0;
+          image(groundhogLeftImg, groundhogIdleX,groundhogIdleY);
+        }else{
+          groundhogIdleX = mainX -=GRID;
+          leftPressed = false;
+        }
+      }
+      
+      if(rightPressed){
+        hogFrame++;
+        if(hogFrame >0 && hogFrame <15){
+          groundhogIdleX += GRID/15.0;
+          image(groundhogRightImg, groundhogIdleX,groundhogIdleY);
+        }else{
+          groundhogIdleX = mainX +=GRID;
+          rightPressed = false;
+        }
+      }
     break;
 
     case GAME_OVER:
@@ -154,6 +201,9 @@ void draw() {
           mouseY > BUTTON_TOP  && mouseY < BUTTON_BOTTOM){
             image (restartHovered,248,360);
             if (mousePressed){
+              downPressed    = false;
+              leftPressed    = false;
+              rightPressed   = false;
               gameState      = GAME_RUN;
               groundhogIdleX = width/2;
               groundhogIdleY = 80;
@@ -166,56 +216,55 @@ void draw() {
             }
       }
     break;
-  } //for switch
-    
-  
+  } //for switch  
   
   // edge limit for hog
-  if (groundhogIdleX > width-80)  {groundhogIdleX = width-80;}
+  if (groundhogIdleX > width-GRID)  {groundhogIdleX = width-GRID;}
   if (groundhogIdleX < 0)         {groundhogIdleX = 0;}
-  if (groundhogIdleY > height-80) {groundhogIdleY = height-80;}
+  if (groundhogIdleY > height-GRID) {groundhogIdleY = height-GRID;}
   
-}   //for draw
+} //for draw
 
 void keyPressed(){
-  oldTime = nowTime;
-  nowTime = millis();
+  float oldTime = nowTime;
+  float nowTime = millis();
   
   if (gameState == GAME_RUN){
     if (key == CODED){
       if (keyPressed){
         switch(keyCode){
-        case LEFT:       
-        if(nowTime-oldTime >= 250){
-          groundhogIdleX = groundhogIdleX - groundhogMovingSpeed;
-          nowTime = millis();          
-        }else{
-          groundhogIdleX -= groundhogMovingSpeed;          
+        case LEFT:
+        if(nowTime-oldTime >250){
+          leftPressed = true;
+          hogFrame =0;
+          mainX = groundhogIdleX;
+          oldTime = nowTime;
         }
-        image(groundhogLeftImg,groundhogIdleX,groundhogIdleY);
         break;
-             
+               
         case RIGHT:
-        if(nowTime-oldTime >= 250){
-          groundhogIdleX = groundhogIdleX + groundhogMovingSpeed;
-          nowTime = millis();          
-        }else{
-          groundhogIdleX += groundhogMovingSpeed;
+        if(nowTime-oldTime >250){
+          rightPressed = true;
+          hogFrame =0;
+          mainX = groundhogIdleX;
+          oldTime = nowTime;
         }
-        image(groundhogRightImg,groundhogIdleX,groundhogIdleY);
         break;
-      
+        
         case DOWN:
-        if(nowTime-oldTime >= 250){
-          groundhogIdleY = groundhogIdleY + groundhogMovingSpeed;
-          nowTime = millis();          
-        }else{
-          groundhogIdleY += groundhogMovingSpeed;
+        if(nowTime-oldTime >250){
+          downPressed = true;
+          hogFrame =0;
+          mainY = groundhogIdleY;
+          oldTime = nowTime;
         }
-        image(groundhogDownImg,groundhogIdleX, groundhogIdleY);
         break;
         }
       }
     }
   }
+}
+
+void keyReleased(){
+  
 }
