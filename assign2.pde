@@ -234,39 +234,41 @@ void keyPressed(){
       if (keyPressed){
         switch(keyCode){
         case LEFT:
-        if(leftPressed == false){
-          if(nowTime-oldTime >250){
-            leftPressed = true;
-            noPressed = false;
-            hogFrame =0;
-            mainX = groundhogIdleX;
-            oldTime = nowTime;
-          }
+        if(nowTime-oldTime >250){
+          leftPressed = true;
+          noPressed = false;
+          hogFrame =0;
+          mainX = groundhogIdleX;
+          oldTime = nowTime;
+        }else{
+          leftPressed = false;
         }
+        
         break;
                
         case RIGHT:
-        if(rightPressed == false){
-          if(nowTime-oldTime >250){
-            rightPressed = true;
-            noPressed = false;
-            hogFrame =0;
-            mainX = groundhogIdleX;
-            oldTime = nowTime;
-          }
+        if(nowTime-oldTime >250){
+          rightPressed = true;
+          noPressed = false;
+          hogFrame =0;
+          mainX = groundhogIdleX;
+          oldTime = nowTime;
+        }else{
+          rightPressed = false;
         }
+        
         break;
         
         case DOWN:
-        if(downPressed == false){
-          if(nowTime-oldTime >250){
-            downPressed = true;
-            noPressed = false;
-            hogFrame =0;
-            mainY = groundhogIdleY;
-            oldTime = nowTime;
-          }
-        }
+        if(nowTime-oldTime >250){
+          downPressed = true;
+          noPressed = false;
+          hogFrame =0;
+          mainY = groundhogIdleY;
+          oldTime = nowTime;
+        }else{
+          downPressed = false;
+        }        
         break;
         }
       }
