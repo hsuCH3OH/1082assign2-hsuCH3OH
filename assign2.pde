@@ -75,16 +75,15 @@ void draw() {
   // Switch Game State
   switch(gameState){
     case GAME_START:
+      image (titleImg,0,0);
+       image (startNormal,248,360);
       if (mouseX > BUTTON_LEFT && mouseX < BUTTON_RIGHT &&
           mouseY > BUTTON_TOP  && mouseY < BUTTON_BOTTOM){
           image (startHovered,248,360);  //startBotton turn light
           if (mousePressed){             //also the botton has to be pressed
             gameState = GAME_RUN;
           }
-       }else{
-         image (titleImg,0,0);
-         image (startNormal,248,360);
-        }
+       }
     break;
 
     case GAME_RUN:
