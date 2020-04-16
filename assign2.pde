@@ -209,7 +209,8 @@ void draw() {
               groundhogIdleY = 80;
               lifeImage1X    = 10;
               lifeImage2X    = 80;
-              soldierXAxis   = floor(random(640));
+              speedX         = 6;
+              soldierXAxis   = -100;
               soldierYAxis   = floor(random(2,6))*80;
               cabbageX       = floor(random(0,8))*80;
               cabbageY       = floor(random(2,6))*80;
@@ -234,29 +235,38 @@ void keyPressed(){
       if (keyPressed){
         switch(keyCode){
         case LEFT:
-        if(nowTime-oldTime >250){
-          leftPressed = true;
-          hogFrame =0;
-          mainX = groundhogIdleX;
-          oldTime = nowTime;
+        if(leftPressed == false){
+          if(nowTime-oldTime >250){
+            leftPressed = true;
+            noPressed = false;
+            hogFrame =0;
+            mainX = groundhogIdleX;
+            oldTime = nowTime;
+          }
         }
         break;
                
         case RIGHT:
-        if(nowTime-oldTime >250){
-          rightPressed = true;
-          hogFrame =0;
-          mainX = groundhogIdleX;
-          oldTime = nowTime;
+        if(rightPressed == false){
+          if(nowTime-oldTime >250){
+            rightPressed = true;
+            noPressed = false;
+            hogFrame =0;
+            mainX = groundhogIdleX;
+            oldTime = nowTime;
+          }
         }
         break;
         
         case DOWN:
-        if(nowTime-oldTime >250){
-          downPressed = true;
-          hogFrame =0;
-          mainY = groundhogIdleY;
-          oldTime = nowTime;
+        if(downPressed == false){
+          if(nowTime-oldTime >250){
+            downPressed = true;
+            noPressed = false;
+            hogFrame =0;
+            mainY = groundhogIdleY;
+            oldTime = nowTime;
+          }
         }
         break;
         }
