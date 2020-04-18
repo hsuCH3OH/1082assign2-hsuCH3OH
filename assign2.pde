@@ -67,6 +67,7 @@ void setup() {
   
   frameRate(60);
   lastTime = millis();
+
 }
 
 void draw() {
@@ -166,8 +167,7 @@ void draw() {
           image(groundhogDownImg, groundhogIdleX,groundhogIdleY);
         }else{
           groundhogIdleY = mainY+=GRID;
-          //downPressed = false;
-          //noPressed = true;
+          downPressed = false;
         }
       }
       
@@ -178,8 +178,7 @@ void draw() {
           image(groundhogLeftImg, groundhogIdleX,groundhogIdleY);
         }else{
           groundhogIdleX = mainX -=GRID;
-          //leftPressed = false;
-          //noPressed = true;
+          leftPressed = false;
         }
       }
       
@@ -190,8 +189,7 @@ void draw() {
           image(groundhogRightImg, groundhogIdleX,groundhogIdleY);
         }else{
           groundhogIdleX = mainX +=GRID;
-          //rightPressed = false;
-          //noPressed = true;
+          rightPressed = false;
         }
       }
     break;
@@ -220,6 +218,51 @@ void draw() {
       }
     break;
   } //for switch
+    
+  //// delta time  
+  //oldTime = nowTime;
+  //nowTime = millis();
+  
+  //if(gameState == GAME_RUN){
+  //  if (keyPressed){
+  //    if (key == CODED){
+  //      switch (keyCode){
+  //      case LEFT:
+        
+  //      if(nowTime - oldTime >=250){
+  //        groundhogIdleX -= groundhogMovingSpeed;
+
+  //        nowTime = millis();
+  //      }
+  //      else{          
+  //        groundhogIdleX -=groundhogMovingSpeed/4;
+  //        }      
+  //      image(groundhogLeftImg,groundhogIdleX,groundhogIdleY);
+  //      break;
+        
+  //      case RIGHT:
+  //      if(nowTime - oldTime >=250){
+  //        groundhogIdleX += groundhogMovingSpeed;
+  //        nowTime = millis();
+  //      }else{
+  //        groundhogIdleX +=groundhogMovingSpeed/4;
+  //        }
+  //      image(groundhogRightImg,groundhogIdleX,groundhogIdleY);
+  //      break;
+        
+  //      case DOWN:
+  //      if(nowTime - oldTime >=250){
+  //        groundhogIdleY += groundhogMovingSpeed;
+  //        nowTime = millis();
+  //      }else{
+  //        groundhogIdleY +=groundhogMovingSpeed/4;
+  //        }
+  //      image(groundhogDownImg,groundhogIdleX,groundhogIdleY);
+  //      break;
+  //      } //for switch keyCode
+  //    }
+  //  }
+  //}
   
   // edge limit for hog
   if (groundhogIdleX > width-GRID)  {groundhogIdleX = width-GRID;}
@@ -243,23 +286,43 @@ void keyPressed(){
           if (groundhogIdleX <= 0){
             groundhogIdleX = 0;
           }
-	  oldTime = nowTime;
+          oldTime = nowTime;
         }
         hogFrame =0;
-        mainX = groundhogIdleX;      
+        mainX = groundhogIdleX;
+        
+        //if(nowTime-oldTime >250){
+        //  leftPressed = true;
+        //  noPressed = false;
+        //  hogFrame =0;
+        //  mainX = groundhogIdleX;
+        //  oldTime = nowTime;
+        //}else{
+        //  leftPressed = false;
+        //}
         break;
                
         case RIGHT:
         if(rightPressed == false){ 
           rightPressed = true;
           noPressed = false;
-          if (groundhogIdleX > height){
-            groundhogIdleX = 7*GRID;
+          if (groundhogIdleX >= width-GRID){
+            groundhogIdleX = width-GRID;
           }
-	  oldTime = nowTime;
+          oldTime = nowTime;
         }
         hogFrame =0;
-        mainX = groundhogIdleX;        
+        mainX = groundhogIdleX;
+        
+        //if(nowTime-oldTime >250){
+        //  rightPressed = true;
+        //  noPressed = false;
+        //  hogFrame =0;
+        //  mainX = groundhogIdleX;
+        //  oldTime = nowTime;
+        //}else{
+        //  rightPressed = false;
+        //}
         break;
         
         case DOWN:
@@ -269,10 +332,20 @@ void keyPressed(){
           if (groundhogIdleY >= height){
             groundhogIdleY = GRID*5;
           }
-	  oldTime = nowTime;
+          oldTime = nowTime;
         }
         hogFrame =0;
-        mainY = groundhogIdleY;        
+        mainY = groundhogIdleY;
+        
+        //if(nowTime-oldTime >250){
+        //  downPressed = true;
+        //  noPressed = false;
+        //  hogFrame =0;
+        //  mainY = groundhogIdleY;
+        //  oldTime = nowTime;
+        //}else{
+        //  downPressed = false;
+        //}
         break;
         }
       }
