@@ -243,10 +243,10 @@ void keyPressed(){
           if (groundhogIdleX <= 0){
             groundhogIdleX = 0;
           }
+	  oldTime = nowTime;
         }
         hogFrame =0;
-        mainX = groundhogIdleX;
-        //oldTime = nowTime;
+        mainX = groundhogIdleX;      
         break;
                
         case RIGHT:
@@ -256,10 +256,10 @@ void keyPressed(){
           if (groundhogIdleX > height){
             groundhogIdleX = 7*GRID;
           }
+	  oldTime = nowTime;
         }
         hogFrame =0;
-        mainX = groundhogIdleX;
-        //oldTime = nowTime;
+        mainX = groundhogIdleX;        
         break;
         
         case DOWN:
@@ -269,10 +269,10 @@ void keyPressed(){
           if (groundhogIdleY >= height){
             groundhogIdleY = GRID*5;
           }
+	  oldTime = nowTime;
         }
         hogFrame =0;
-        mainY = groundhogIdleY;
-        //oldTime = nowTime;
+        mainY = groundhogIdleY;        
         break;
         }
       }
