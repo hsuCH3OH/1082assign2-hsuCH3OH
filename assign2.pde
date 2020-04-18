@@ -246,7 +246,7 @@ void keyPressed(){
         }
         hogFrame =0;
         mainX = groundhogIdleX;
-        oldTime = nowTime;
+        //oldTime = nowTime;
         break;
                
         case RIGHT:
@@ -259,7 +259,7 @@ void keyPressed(){
         }
         hogFrame =0;
         mainX = groundhogIdleX;
-        oldTime = nowTime;
+        //oldTime = nowTime;
         break;
         
         case DOWN:
@@ -272,7 +272,7 @@ void keyPressed(){
         }
         hogFrame =0;
         mainY = groundhogIdleY;
-        oldTime = nowTime;
+        //oldTime = nowTime;
         break;
         }
       }
