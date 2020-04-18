@@ -27,7 +27,7 @@ int lastTime=0;
 
 void setup() {
 
-  size(640, 480, P2D);
+	size(640, 480, P2D);
   backgroundImg     = loadImage("img/bg.jpg");
   groundhogIdleImg  = loadImage("img/groundhogIdle.png"); 
   groundhogDownImg  = loadImage("img/groundhogDown.png");
@@ -67,7 +67,6 @@ void setup() {
   
   frameRate(60);
   lastTime = millis();
-
 }
 
 void draw() {
@@ -76,7 +75,7 @@ void draw() {
   switch(gameState){
     case GAME_START:
       image (titleImg,0,0);
-       image (startNormal,248,360);
+      image (startNormal,248,360);
       if (mouseX > BUTTON_LEFT && mouseX < BUTTON_RIGHT &&
           mouseY > BUTTON_TOP  && mouseY < BUTTON_BOTTOM){
           image (startHovered,248,360);  //startBotton turn light
@@ -111,7 +110,8 @@ void draw() {
       strokeWeight(5);
       ellipse(590,50,120,120);
       
-      //soldier
+      //characters
+      //image (groundhogIdleImg,groundhogIdleX,groundhogIdleY);
       image (soldierImg,soldierXAxis,soldierYAxis);
       
       //AABB hit, A=soldier,B=hog
@@ -167,6 +167,7 @@ void draw() {
         }else{
           groundhogIdleY = mainY+=GRID;
           downPressed = false;
+          noPressed = true;
         }
       }
       
@@ -178,6 +179,7 @@ void draw() {
         }else{
           groundhogIdleX = mainX -=GRID;
           leftPressed = false;
+          noPressed = true;
         }
       }
       
@@ -189,6 +191,7 @@ void draw() {
         }else{
           groundhogIdleX = mainX +=GRID;
           rightPressed = false;
+          noPressed = true;
         }
       }
     break;
@@ -216,7 +219,7 @@ void draw() {
             }
       }
     break;
-  } //for switch  
+  } //for switch
   
   // edge limit for hog
   if (groundhogIdleX > width-GRID)  {groundhogIdleX = width-GRID;}
@@ -234,41 +237,42 @@ void keyPressed(){
       if (keyPressed){
         switch(keyCode){
         case LEFT:
-        if(nowTime-oldTime >250){
+        if(leftPressed == false){ 
           leftPressed = true;
           noPressed = false;
-          hogFrame =0;
-          mainX = groundhogIdleX;
-          oldTime = nowTime;
-        }else{
-          leftPressed = false;
+          if (groundhogIdleX <= 0){
+            groundhogIdleX = 0;
+          }
         }
-        
+        hogFrame =0;
+        mainX = groundhogIdleX;
+        oldTime = nowTime;
         break;
                
         case RIGHT:
-        if(nowTime-oldTime >250){
+        if(rightPressed == false){ 
           rightPressed = true;
           noPressed = false;
-          hogFrame =0;
-          mainX = groundhogIdleX;
-          oldTime = nowTime;
-        }else{
-          rightPressed = false;
+          if (groundhogIdleX > height){
+            groundhogIdleX = 7*GRID;
+          }
         }
-        
+        hogFrame =0;
+        mainX = groundhogIdleX;
+        oldTime = nowTime;
         break;
         
         case DOWN:
-        if(nowTime-oldTime >250){
+        if(downPressed == false){ 
           downPressed = true;
           noPressed = false;
-          hogFrame =0;
-          mainY = groundhogIdleY;
-          oldTime = nowTime;
-        }else{
-          downPressed = false;
-        }        
+          if (groundhogIdleY >= height){
+            groundhogIdleY = GRID*5;
+          }
+        }
+        hogFrame =0;
+        mainY = groundhogIdleY;
+        oldTime = nowTime;
         break;
         }
       }
