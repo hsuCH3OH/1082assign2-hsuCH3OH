@@ -166,7 +166,7 @@ void draw() {
           image(groundhogDownImg, groundhogIdleX,groundhogIdleY);
         }else{
           groundhogIdleY = mainY+=GRID;
-          downPressed = false;
+          //downPressed = false;
           //noPressed = true;
         }
       }
@@ -178,7 +178,7 @@ void draw() {
           image(groundhogLeftImg, groundhogIdleX,groundhogIdleY);
         }else{
           groundhogIdleX = mainX -=GRID;
-          leftPressed = false;
+          //leftPressed = false;
           //noPressed = true;
         }
       }
@@ -190,7 +190,7 @@ void draw() {
           image(groundhogRightImg, groundhogIdleX,groundhogIdleY);
         }else{
           groundhogIdleX = mainX +=GRID;
-          rightPressed = false;
+          //rightPressed = false;
           //noPressed = true;
         }
       }
