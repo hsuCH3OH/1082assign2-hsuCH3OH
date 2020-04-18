@@ -167,7 +167,7 @@ void draw() {
         }else{
           groundhogIdleY = mainY+=GRID;
           downPressed = false;
-          noPressed = true;
+          //noPressed = true;
         }
       }
       
@@ -179,7 +179,7 @@ void draw() {
         }else{
           groundhogIdleX = mainX -=GRID;
           leftPressed = false;
-          noPressed = true;
+          //noPressed = true;
         }
       }
       
@@ -191,7 +191,7 @@ void draw() {
         }else{
           groundhogIdleX = mainX +=GRID;
           rightPressed = false;
-          noPressed = true;
+          //noPressed = true;
         }
       }
     break;
