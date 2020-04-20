@@ -233,7 +233,7 @@ void keyPressed(){
       if (keyPressed){
         switch(keyCode){
         case LEFT:
-        if(leftPressed == false){ 
+        if(leftPressed == false&& rightPressed == false && downPressed == false){ 
           leftPressed = true;
           noPressed = false;
           if (groundhogIdleX <= 0){
@@ -246,7 +246,7 @@ void keyPressed(){
         break;
                
         case RIGHT:
-        if(rightPressed == false){ 
+        if(rightPressed == false && leftPressed == false && downPressed == false){ 
           rightPressed = true;
           noPressed = false;
           if (groundhogIdleX >= width-GRID){
@@ -259,7 +259,7 @@ void keyPressed(){
         break;
         
         case DOWN:
-        if(downPressed == false){ 
+        if(downPressed == false && leftPressed == false && rightPressed == false){ 
           downPressed = true;
           noPressed = false;
           if (groundhogIdleY >= height){
