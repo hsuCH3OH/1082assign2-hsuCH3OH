@@ -233,42 +233,39 @@ void keyPressed(){
 
         switch(keyCode){
         case LEFT:
-        if(leftPressed == false&& rightPressed == false && downPressed == false){ 
+        if(nowTime-oldTime >250){
           leftPressed = true;
           noPressed = false;
-          if (groundhogIdleX <= 0){
-            groundhogIdleX = 0;
-          }
+          hogFrame =0;
+          mainX = groundhogIdleX;
           oldTime = nowTime;
+        }else{
+          leftPressed = false;
         }
-        hogFrame =0;
-        mainX = groundhogIdleX;
         break;
                
         case RIGHT:
-        if(rightPressed == false && leftPressed == false && downPressed == false){ 
+        if(nowTime-oldTime >250){
           rightPressed = true;
           noPressed = false;
-          if (groundhogIdleX >= width-GRID){
-            groundhogIdleX = width-GRID;
-          }
+          hogFrame =0;
+          mainX = groundhogIdleX;
           oldTime = nowTime;
+        }else{
+          rightPressed = false;
         }
-        hogFrame =0;
-        mainX = groundhogIdleX;
         break;
         
         case DOWN:
-        if(downPressed == false && leftPressed == false && rightPressed == false){ 
+        if(nowTime-oldTime >250){
           downPressed = true;
           noPressed = false;
-          if (groundhogIdleY >= height){
-            groundhogIdleY = GRID*5;
-          }
+          hogFrame =0;
+          mainY = groundhogIdleY;
           oldTime = nowTime;
+        }else{
+          downPressed = false;
         }
-        hogFrame =0;
-        mainY = groundhogIdleY;
         break;
         }
       }
