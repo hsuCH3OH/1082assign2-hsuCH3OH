@@ -230,7 +230,7 @@ void keyPressed(){
   
   if (gameState == GAME_RUN){
     if (key == CODED){
-      if (keyPressed){
+
         switch(keyCode){
         case LEFT:
         if(leftPressed == false&& rightPressed == false && downPressed == false){ 
@@ -272,6 +272,6 @@ void keyPressed(){
         break;
         }
       }
-    }
+    
   }
 }
